@@ -1,45 +1,86 @@
-import tkinter as tk
-from tkinter import *
-from PIL import Image, ImageTk
-import time
-import threading
-
-currentRunningTitle = "System Booting Up..."
+import pygame
+import sys
 
 
+# initializing the constructor
+pygame.init()
 
-class App(tk.Frame):
-    def __init__(self):
-        pass
-    def callback(self):
-        self.root.quit()
-    def updateTitle(self, text):
-        self.titleLabel.config(text = text)
-    def update(self):
-        self.main.update()
-        app.root.after(100,self.update)
-    def run(self, main):
-        self.main = main
-        self.root = Tk()
-        self.root.geometry("1080x10180")
-        # Create a photoimage object of the image in the path
-        assistantImage = Image.open("MoneyIcon.png")
-        assistantImage = ImageTk.PhotoImage(assistantImage)
+# screen resolution
+res = (720,720)
 
-        label1 = tk.Label(image=assistantImage)
-        label1.image = assistantImage
+# opens up a window
+screen = pygame.display.set_mode(res)
 
-        self.titleLabel = tk.Label(self.root, text="System Booting Up...",font="Arial 50 bold")
-        self.titleLabel.place(x=540, y=50,anchor=CENTER)
+# white color
+color = (255,255,255)
 
-        # Position image
-        label1.place(x=540, y=350, anchor = CENTER)
-        self.update()
-        self.root.mainloop()
+# light shade of the button
+color_light = (170,170,170)
 
+# dark shade of the button
+color_dark = (100,100,100)
 
+# stores the width of the
+# screen into a variable
+width = screen.get_width()
 
-app = App()
+# stores the height of the
+# screen into a variable
+height = screen.get_height()
+
+# defining a font
+smallfont = pygame.font.SysFont('Corbel',35)
+
+# rendering a text written in
+# this font
+text = smallfont.render('quit' , True , color)
+
+def uiUpdates():
+    mouse = pygame.mouse.get_pos()
+
+    for ev in pygame.event.get():
+		
+        if ev.type == pygame.QUIT:
+            pygame.quit()
+            return True
+        
+    #checks if a mouse is clicked
+        if ev.type == pygame.MOUSEBUTTONDOWN:
+    
+    #if the mouse is clicked on the
+    # button the game is terminated
+            if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:
+                pygame.quit()
+                return True
+            
+# fills the screen with a color
+    
+    screen.fill((60,25,60))
+    
+    # stores the (x,y) coordinates into
+    # the variable as a tuple
+    
+    # if mouse is hovered on a button it
+    # changes to lighter shade
+    if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:
+        pygame.draw.rect(screen,color_light,[width/2,height/2,140,40])
+        
+    else:
+        pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40])
+    
+    # superimposing the text onto our button
+    screen.blit(text , (width/2+50,height/2))
+
+    #my stuff
+    mainImage = pygame.image.load("MoneyIcon.png")
+    screen.blit(mainImage, (0,0))
+    #mystuff
+    
+    # updates the frames of the game
+    pygame.display.update()
+	
+	
+
 
 
 

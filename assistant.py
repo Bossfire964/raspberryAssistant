@@ -1,11 +1,9 @@
+import sys
 import ui
-import time
-mainApp = ui.app
+while True:
+    if ui.uiUpdates() == True:
+        sys.exit()   
 
-class main:
-    def update():
-        mainApp.updateTitle("this is new")
-mainApp.run(main)
 
 
 
