@@ -6,7 +6,11 @@ import sys
 pygame.init()
 
 # screen resolution
-res = (720,720)
+res = (720, 720)
+
+white = (255, 255, 255)
+green = (0, 255, 0)
+blue = (0, 0, 128)
 
 # opens up a window
 screen = pygame.display.set_mode(res)
@@ -35,6 +39,11 @@ smallfont = pygame.font.SysFont('Corbel',35)
 # this font
 text = smallfont.render('quit' , True , color)
 
+
+"""my varibles that will change"""
+captionText = "These is no caption"
+
+
 def uiUpdates():
     mouse = pygame.mouse.get_pos()
 
@@ -55,25 +64,29 @@ def uiUpdates():
             
 # fills the screen with a color
     
-    screen.fill((60,25,60))
+    screen.fill((0,0,0))
     
     # stores the (x,y) coordinates into
     # the variable as a tuple
     
     # if mouse is hovered on a button it
     # changes to lighter shade
-    if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:
-        pygame.draw.rect(screen,color_light,[width/2,height/2,140,40])
-        
-    else:
-        pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40])
     
     # superimposing the text onto our button
     screen.blit(text , (width/2+50,height/2))
 
     #my stuff
     mainImage = pygame.image.load("MoneyIcon.png")
-    screen.blit(mainImage, (0,0))
+    screen.blit(mainImage, (width-520,height-520))
+    mainImage.get_rect().center = (width // 2, height // 2)
+   
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    subText = font.render(captionText, True, green)
+    screen.blit(subText, (width-520,height-100))
+
+    topText = font.render(captionText, True, green)
+    screen.blit(topText, (width-520,100))
+
     #mystuff
     
     # updates the frames of the game
