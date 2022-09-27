@@ -33,11 +33,11 @@ width = screen.get_width()
 height = screen.get_height()
 
 # defining a font
-smallfont = pygame.font.SysFont('Corbel',35)
+#smallfont = pygame.font.SysFont('Corbel',35)
 
 # rendering a text written in
 # this font
-text = smallfont.render('quit' , True , color)
+#text = smallfont.render('quit' , True , color)
 
 
 """my varibles that will change"""
@@ -73,7 +73,7 @@ def uiUpdates():
     # changes to lighter shade
     
     # superimposing the text onto our button
-    screen.blit(text , (width/2+50,height/2))
+    #screen.blit(text , (width/2+50,height/2))
 
     #my stuff
     mainImage = pygame.image.load("MoneyIcon.png")
