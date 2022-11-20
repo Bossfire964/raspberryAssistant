@@ -1,5 +1,7 @@
 import pygame
 import sys
+import pygame.font
+
 
 
 # initializing the constructor
@@ -76,7 +78,7 @@ def uiUpdates():
     #screen.blit(text , (width/2+50,height/2))
 
     #my stuff
-    mainImage = pygame.image.load("MoneyIcon.png")
+    mainImage = pygame.image.load("MoneyIcon.bmp")
     screen.blit(mainImage, (width-520,height-520))
     mainImage.get_rect().center = (width // 2, height // 2)
    
