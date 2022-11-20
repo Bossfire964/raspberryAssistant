@@ -9,6 +9,8 @@ import json
 import time
 import speechrecognition
 import asyncio
+import ui
+import pygame.font
 
 import speech_recognition as sr
 
@@ -33,11 +35,15 @@ def doCommand(info, p):
         p.ChangeDutyCycle(4.1)
         time.sleep(1)
         p.ChangeDutyCycle(0)
+        ui.captionText = "Turning light on"
+        ui.uiUpdates()
         return True
     if info == "light off" or info == "light of" or info == "turn light off" or info == "turn light of":
         p.ChangeDutyCycle(11.33)
         time.sleep(1)
         p.ChangeDutyCycle(0)
+        ui.captionText = "Turning light off"
+        ui.uiUpdates()
         return True
     return False
 def process_event(event, assistant):
@@ -69,6 +75,7 @@ async def showQues(assistant):
         item = assistant.get()
         process_event(item)
 def main():
+    ui.uiUpdates()
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--credentials', type=existing_file,
@@ -90,6 +97,7 @@ def main():
         #loop.run_until_complete(showQues(ques))
         while True:
              output = speechrecognition.record_audio(p)
+             ui.pygame.display.update()
              if output == True:
                  GPIO.output(25,True)
                  assistant.start_conversation()
