@@ -1,7 +1,7 @@
 import pygame
 import sys
 import pygame.font
-
+import cv2
 
 
 # initializing the constructor
@@ -44,6 +44,11 @@ height = screen.get_height()
 
 """my varibles that will change"""
 captionText = "These is no caption"
+cap = cv2.VideoCapture('AnimatedBackground.mp4')
+success, img = cap.read()
+shape = img.shape[1::-1]
+wn = pygame.display.set_mode(shape)
+clock = pygame.time.Clock()
 
 
 def uiUpdates():
@@ -66,7 +71,7 @@ def uiUpdates():
             
 # fills the screen with a color
     
-    screen.fill((0,0,0))
+    #screen.fill((0,0,0))
     
     # stores the (x,y) coordinates into
     # the variable as a tuple
@@ -78,6 +83,9 @@ def uiUpdates():
     #screen.blit(text , (width/2+50,height/2))
 
     #my stuff
+    
+        
+
     mainImage = pygame.image.load("MoneyIcon.bmp")
     screen.blit(mainImage, (width-520,height-520))
     mainImage.get_rect().center = (width // 2, height // 2)
@@ -95,7 +103,19 @@ def uiUpdates():
     pygame.display.update()
 	
 	
-
+def updateVideo():
+    global cap
+    clock.tick(60)
+    success, img = cap.read()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            success = False
+    try:
+        wn.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
+    except AttributeError as e:
+        cap = cv2.VideoCapture('AnimatedBackground.mp4')
+    uiUpdates()
+    pygame.display.update()
 
 
 
