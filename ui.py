@@ -42,6 +42,10 @@ color_dark = (100,100,100)
 
 """my varibles that will change"""
 captionText = "These is no caption"
+soundWave = 300
+inTalking = False
+pulseMode = False
+pulsingUp = False
 
 cap = cv2.VideoCapture('AnimatedBackground.mp4')
 success, img = cap.read()
@@ -89,7 +93,7 @@ def uiUpdates():
         
 
     mainImage = pygame.image.load("pythonAssistantLogo.png")
-    #mainImage = pygame.transform.scale(mainImage, (50,50))
+    mainImage = pygame.transform.scale(mainImage, (soundWave,soundWave))
     wn.blit(mainImage, ((width/2)-(mainImage.get_width()/2),(height/2)-(mainImage.get_height()/2)))
     mainImage.get_rect().center = (width // 2, height // 2)
 
@@ -107,6 +111,9 @@ def uiUpdates():
 	
 def updateVideo():
     global cap
+    global soundWave
+    global pulseMode
+    global pulsingUp
     clock.tick(60)
     success, img = cap.read()
     for event in pygame.event.get():
@@ -116,6 +123,23 @@ def updateVideo():
         wn.blit(pygame.image.frombuffer(img.tobytes(), shape, "BGR"), (0, 0))
     except AttributeError as e:
         cap = cv2.VideoCapture('AnimatedBackground.mp4')
+    if not inTalking and soundWave > 300 and not pulseMode:
+        soundWave -= 5
+    elif inTalking and soundWave < 400 and not pulseMode:
+        soundWave += 5
+    if soundWave >= 400:
+        pulseMode = True
+        soundWave = 400
+    elif not inTalking:
+        pulseMode = False
+    if pulseMode and pulsingUp:
+        soundWave += 0.5
+        if soundWave >= 400:
+            pulsingUp = False
+    elif pulseMode and not pulsingUp:
+        soundWave -= 0.5
+        if soundWave <= 370:
+            pulsingUp = True
     uiUpdates()
     pygame.display.update()
 
