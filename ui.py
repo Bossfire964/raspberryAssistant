@@ -8,14 +8,14 @@ import cv2
 pygame.init()
 
 # screen resolution
-res = (720, 720)
+res = (1000, 700)
 
 white = (255, 255, 255)
 green = (0, 255, 0)
 blue = (0, 0, 128)
+orange = (255,215,0)
 
 # opens up a window
-screen = pygame.display.set_mode(res)
 
 # white color
 color = (255,255,255)
@@ -28,11 +28,9 @@ color_dark = (100,100,100)
 
 # stores the width of the
 # screen into a variable
-width = screen.get_width()
 
 # stores the height of the
 # screen into a variable
-height = screen.get_height()
 
 # defining a font
 #smallfont = pygame.font.SysFont('Corbel',35)
@@ -44,10 +42,14 @@ height = screen.get_height()
 
 """my varibles that will change"""
 captionText = "These is no caption"
+
 cap = cv2.VideoCapture('AnimatedBackground.mp4')
 success, img = cap.read()
 shape = img.shape[1::-1]
-wn = pygame.display.set_mode(shape)
+#wn = pygame.display.set_mode(shape)
+wn = pygame.display.set_mode(res)
+width = wn.get_width()
+height = wn.get_height()
 clock = pygame.time.Clock()
 
 
@@ -58,7 +60,7 @@ def uiUpdates():
 		
         if ev.type == pygame.QUIT:
             pygame.quit()
-            return True
+            sys.exit()
         
     #checks if a mouse is clicked
         if ev.type == pygame.MOUSEBUTTONDOWN:
@@ -67,7 +69,7 @@ def uiUpdates():
     # button the game is terminated
             if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:
                 pygame.quit()
-                return True
+                sys.exit()
             
 # fills the screen with a color
     
@@ -86,16 +88,16 @@ def uiUpdates():
     
         
 
-    mainImage = pygame.image.load("MoneyIcon.bmp")
-    screen.blit(mainImage, (width-520,height-520))
+    mainImage = pygame.image.load("pythonAssistantLogo.png")
+    #mainImage = pygame.transform.scale(mainImage, (50,50))
+    wn.blit(mainImage, ((width/2)-(mainImage.get_width()/2),(height/2)-(mainImage.get_height()/2)))
     mainImage.get_rect().center = (width // 2, height // 2)
-   
-    font = pygame.font.Font('freesansbold.ttf', 32)
-    subText = font.render(captionText, True, green)
-    screen.blit(subText, (width-520,height-100))
 
-    topText = font.render(captionText, True, green)
-    screen.blit(topText, (width-520,100))
+    
+   
+    font = pygame.font.Font('Font.ttf', 50)
+    subText = font.render(captionText, True, orange)
+    wn.blit(subText, ((width/2)-(subText.get_width()/2),height-100))
 
     #mystuff
     
